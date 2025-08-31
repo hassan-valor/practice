@@ -1,23 +1,23 @@
 # EXTRA-CREDIT.md
 
-## 1) Why I cloned with `--recursive`
+## 1) Why did you have to specify the “recursive” flag when initially cloning the assignment repository? Explain in detail.
 
-I had to use `--recursive` when cloning because the repo has submodules. If I just did a normal `git clone`, those submodules would come in empty. Using `--recursive` made Git pull in the submodules at the right commits, so I got everything I needed for the project to build and run.
-
----
-
-## 2) Why I had to set upstream for `main` but not always for the release branches
-
-My local `main` didn’t automatically know what remote branch to track since I changed remotes around. That meant I had to manually set the upstream so it would push and pull from `myrepo/main`. But when I created branches like `v4.1.x` or `v5.1.x`, I usually based them directly on the remote branch or pushed with `-u`, and Git set the upstream automatically. That’s why `main` needed the extra step while the release branches didn’t.
+I had to use `--recursive` because the repo includes submodules. If I only did a normal `git clone`, the submodules would just be empty folders pointing at commits. By adding the recursive flag, Git also pulled in those submodules at the correct commits. That way my repo matched what the project needed to build and run.
 
 ---
 
-## 3) Part 2 — why not cherry-pick commit `72a89ea32f`
+## 2) Why did you have to manually set the upstream tracker for the main branch in your local repository (but potentially not the v4.1.x and v5.1.x branches)? Explain in detail.
 
-That commit from `main` didn’t apply cleanly to the older branch. If I cherry-picked it, it would either cause conflicts or bring in changes that didn’t belong. Instead, I just edited the `configure.ac` file directly to make the exact same fix. This way the branch only got the one small change it needed, nothing extra.
+My local `main` didn’t automatically know what remote branch to track after I changed remotes. Since `main` already existed, Git didn’t reset it on its own, so I had to manually point it to `myrepo/main`. On the other hand, when I created branches like `v4.1.x` and `v5.1.x`, I made them directly from the remote branch or pushed with `-u`. In those cases, Git set up the upstream tracking automatically, so I didn’t need to do it manually.
 
 ---
 
-## 4) Part 3 — why I had to write my own PR title and description
+## 3) In Part 2, why didn’t we cherry pick commit 72a89ea32f from main, and instead we had you edit the configure.ac file directly? Explain in detail.
 
-GitHub only auto-fills a PR title and description when there’s one clear commit to use. In Part 3 I had more than one commit in the branch, so GitHub couldn’t auto-fill a nice message. That’s why it just gave me the branch name and left the description blank, and I had to write my own title and description so the PR made sense.
+That commit from `main` wouldn’t apply cleanly to the release branch. If I tried to cherry-pick it, it could cause merge conflicts or pull in extra changes that didn’t belong. The simpler and safer option was just to edit the `configure.ac` file directly to make the one change we needed. This way the branch only got the right fix without dragging in unrelated stuff.
+
+---
+
+## 4) In Part 3, why did you have to write your own PR title and description for the first PR? I.e., why didn’t GitHub automatically fill in a human-readable title and description? Explain in detail.
+
+GitHub only auto-fills a PR title and description when the branch has one clear commit it can use. In Part 3, the branch had more than one commit, so GitHub didn’t know which commit message to pick. That’s why it just left the description blank and gave me the branch name. I had to write my own title and description so the PR would explain clearly what the changes were.
